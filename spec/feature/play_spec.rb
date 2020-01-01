@@ -6,6 +6,8 @@ require 'spec_helper'
 # I would like to be able to play rock/paper/scissors
 
 feature 'playing a game' do
+    PLAY_SEED = 221563
+
     before do
         visit '/'
         fill_in 'name', with: 'Hisham'
@@ -39,6 +41,17 @@ feature 'playing a game' do
 
         expect(possible_messages).to include message
     end
+
+    #As a marketer
+    #So I can play a game
+    #I want the game to choose a random option
+
+    scenario 'game chooses a random option' do
+        srand(PLAY_SEED)
+        click_button 'Rock'
+        expect(page).to have_content 'Opponent chose Scissors!'
+    end
+
 
     def possible_messages
         [:rock, :paper, :scissors].map { |shape| "Opponent chose #{shape.to_s.capitalize}!" }
